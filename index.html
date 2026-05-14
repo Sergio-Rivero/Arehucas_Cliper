@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Arehucas x Clipper · Mini estrategia de marketing digital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    :root{
+      --turquoise:#11c5bf;
+      --blue:#2563eb;
+      --yellow:#ffd447;
+      --green:#2fbf71;
+      --orange:#ff8c34;
+      --pink:#ff4d7a;
+      --deep:#0f2a4d;
+      --sky:#eafcff;
+      --white:rgba(255,255,255,.90);
+      --white-2:rgba(255,255,255,.78);
+      --line:rgba(20,70,110,.10);
+      --shadow:0 20px 50px rgba(20,70,110,.15);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Montserrat,system-ui,sans-serif;
+      color:var(--deep);
+      background:linear-gradient(135deg,#dffbfd,#fef7d8 30%,#eef7ff 64%,#e8fff3 100%);
+      overflow:hidden;
+    }
+
+    .deck{height:100vh;width:100vw;position:relative}
+    .slide{
+      position:absolute;inset:0;display:none;
+      grid-template-rows:auto 1fr auto;
+      padding:22px 4.5vw 78px;
+      overflow:hidden;
+    }
+    .slide.active{display:grid}
+
+    .bg{
+      position:absolute;inset:0;z-index:-3;
+      background:
+        radial-gradient(circle at 8% 10%,rgba(17,197,191,.28),transparent 22%),
+        radial-gradient(circle at 92% 18%,rgba(255,212,71,.35),transparent 18%),
+        radial-gradient(circle at 76% 86%,rgba(47,191,113,.22),transparent 24%),
+        linear-gradient(135deg,#dffcff 0%,#f7fbff 35%,#fff8d7 68%,#eafff5 100%);
+    }
+    .wave,.wave2{
+      position:absolute;border-radius:50%;filter:blur(2px);z-index:-2;opacity:.35;
+    }
+    .wave{width:520px;height:520px;right:-140px;top:-140px;background:radial-gradient(circle,var(--yellow),transparent 62%)}
+    .wave2{width:480px;height:480px;left:-140px;bottom:-170px;background:radial-gradient(circle,var(--turquoise),transparent 62%)}
+
+    .top{
+      display:flex;justify-content:space-between;align-items:center;gap:16px;
+    }
+    .logos{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+    .logo-box{
+      background:rgba(255,255,255,.72);
+      border:1px solid rgba(255,255,255,.9);
+      box-shadow:var(--shadow);
+      border-radius:22px;
+      padding:10px 16px;
+      display:flex;align-items:center;justify-content:center;
+      min-height:66px;
+      backdrop-filter:blur(8px);
+    }
+    .logo-box img{display:block;max-height:40px;max-width:180px;object-fit:contain}
+    .badge{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:11px 16px;border-radius:999px;
+      background:linear-gradient(135deg,var(--turquoise),var(--blue));
+      color:#fff;font-weight:900;box-shadow:0 14px 28px rgba(37,99,235,.18);
+      letter-spacing:.02em;
+    }
+
+    .main{display:grid;align-items:center;min-height:0}
+
+    .hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:24px;align-items:center}
+    .hero-copy{padding-right:10px}
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:10px;margin-bottom:14px;
+      background:rgba(255,255,255,.72);padding:10px 16px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.92);font-size:.9rem;font-weight:900;color:#18837f;
+      box-shadow:var(--shadow);
+    }
+    h1,h2{margin:0}
+    .title{
+      font-family:"Baloo 2",cursive;
+      font-size:clamp(2.8rem,6vw,5.8rem);
+      line-height:.92;letter-spacing:-.03em;color:var(--deep);
+    }
+    .title .accent1{color:var(--blue)}
+    .title .accent2{color:var(--pink)}
+    .lead{
+      margin:16px 0 0;max-width:760px;font-size:clamp(1rem,1.5vw,1.22rem);
+      line-height:1.55;font-weight:600;color:#1f4466;
+    }
+    .hero-pills,.pill-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+    .pill{
+      background:rgba(255,255,255,.82);border:1px solid rgba(255,255,255,.95);box-shadow:var(--shadow);
+      padding:12px 15px;border-radius:18px;font-weight:800;color:#1c4667;display:inline-flex;gap:10px;align-items:flex-start;
+    }
+    .pill i{margin-top:2px}
+    .yellow{color:#d89b00}.green{color:#159b58}.blue{color:var(--blue)}.pink{color:var(--pink)}.turq{color:#0d9e99}
+
+    .hero-visual{
+      background:rgba(255,255,255,.72);
+      border:1px solid rgba(255,255,255,.92);
+      box-shadow:var(--shadow);border-radius:34px;padding:16px;position:relative;
+    }
+    .hero-visual img{width:100%;height:420px;object-fit:cover;border-radius:24px;display:block}
+    .hero-tag{
+      position:absolute;left:28px;bottom:28px;
+      background:linear-gradient(135deg,rgba(255,140,52,.96),rgba(255,77,122,.96));
+      color:#fff;border-radius:18px;padding:14px 16px;font-weight:900;max-width:82%;box-shadow:0 16px 30px rgba(255,77,122,.28)
+    }
+
+    .card{
+      width:min(1220px,100%);
+      background:linear-gradient(135deg,var(--white),var(--white-2));
+      border:1px solid rgba(255,255,255,.96);
+      box-shadow:var(--shadow);
+      border-radius:34px;padding:28px;backdrop-filter:blur(10px);
+    }
+    .card-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;margin-bottom:18px}
+    .section-kicker{font-size:.92rem;font-weight:900;color:#139b95;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+    .section-title{font-family:"Baloo 2",cursive;font-size:clamp(2.2rem,4.8vw,4.25rem);line-height:.95;color:var(--deep)}
+    .subtle{margin:6px 0 0;font-size:1rem;line-height:1.5;color:#31587a;font-weight:600;max-width:760px}
+
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+
+    .tile{
+      background:rgba(255,255,255,.86);border:1px solid var(--line);border-radius:24px;padding:18px;box-shadow:0 8px 18px rgba(20,70,110,.05)
+    }
+    .tile h3,.tile h4{margin:0 0 8px;color:var(--deep)}
+    .tile p{margin:0;color:#355a79;line-height:1.48;font-weight:600;font-size:.95rem}
+    .tile ul{margin:8px 0 0 18px;padding:0;color:#355a79;font-weight:600;line-height:1.45}
+    .icon-ball{
+      width:42px;height:42px;border-radius:50%;display:grid;place-items:center;
+      margin-bottom:10px;color:#fff;font-weight:900;
+      background:linear-gradient(135deg,var(--turquoise),var(--blue));
+      box-shadow:0 10px 18px rgba(17,197,191,.24)
+    }
+    .icon-yellow{background:linear-gradient(135deg,var(--yellow),var(--orange));color:#7a5300}
+    .icon-green{background:linear-gradient(135deg,#73e0a5,var(--green))}
+    .icon-pink{background:linear-gradient(135deg,#ff7a9d,var(--pink))}
+
+    .value-box{
+      background:linear-gradient(135deg,#eafffb,#fff8d7);
+      border:1px solid rgba(17,197,191,.12);border-radius:28px;padding:22px;box-shadow:0 8px 18px rgba(20,70,110,.05)
+    }
+    .value-box .big{font-family:"Baloo 2",cursive;font-size:clamp(1.9rem,3.8vw,3rem);line-height:1;color:#126f93;margin:0 0 10px}
+    .value-box p{margin:0;color:#2f5677;font-weight:700;line-height:1.55}
+
+    .action-banner{
+      margin-top:14px;border-radius:24px;padding:18px 20px;
+      background:linear-gradient(135deg,var(--blue),var(--turquoise));color:#fff;box-shadow:0 16px 28px rgba(37,99,235,.18)
+    }
+    .action-banner strong{display:block;font-size:1.12rem;margin-bottom:6px}
+    .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+    .metric{
+      background:#fff;border-radius:24px;padding:18px;border:1px solid var(--line);box-shadow:0 8px 18px rgba(20,70,110,.05)
+    }
+    .metric .number{font-family:"Baloo 2",cursive;font-size:2.2rem;line-height:.95;margin-bottom:6px;color:#0f7d8e}
+    .metric p{margin:0;color:#355a79;font-weight:700;line-height:1.45}
+
+    .sources{
+      margin-top:16px;padding:14px 16px;border-radius:20px;background:rgba(255,255,255,.72);
+      border:1px dashed rgba(20,70,110,.18);font-size:.88rem;color:#355a79;font-weight:700;line-height:1.45
+    }
+    .sources a{color:#126f93;text-decoration:none;word-break:break-all}
+
+    .footer{
+      display:flex;justify-content:space-between;align-items:center;gap:14px;
+      color:#29607f;font-weight:800;font-size:.92rem
+    }
+    .small{font-size:.84rem;opacity:.86}
+    .nav{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);display:flex;gap:8px;z-index:20}
+    .dot{width:12px;height:12px;border:0;border-radius:999px;background:rgba(37,99,235,.28);cursor:pointer}
+    .dot.active{width:40px;background:linear-gradient(135deg,var(--blue),var(--pink))}
+    .arrows{position:fixed;right:18px;bottom:16px;display:flex;gap:8px;z-index:20}
+    .arrow{border:0;border-radius:16px;background:#fff;color:var(--deep);box-shadow:var(--shadow);padding:12px 15px;font-weight:900;cursor:pointer}
+    .tip{
+      position:fixed;left:18px;bottom:16px;z-index:20;background:rgba(255,255,255,.78);
+      border:1px solid rgba(255,255,255,.95);border-radius:999px;padding:10px 14px;color:#236581;font-weight:900;font-size:.82rem;box-shadow:var(--shadow)
+    }
+
+    @media (max-width: 1024px){
+      body{overflow:auto}
+      .deck{height:auto}
+      .slide{position:relative;min-height:100vh;padding:18px 4vw 28px}
+      .hero-grid,.grid-2,.grid-3,.grid-4,.metrics{grid-template-columns:1fr}
+      .hero-visual img{height:260px}
+      .card{padding:22px;border-radius:28px}
+      .nav,.arrows,.tip{display:none}
+      .top{align-items:flex-start;flex-direction:column}
+      .footer{display:block;text-align:center}
+    }
+  </style>
+</head>
+<body>
+  <div class="deck">
+
+    <!-- DIAPOSITIVA 1 -->
+    <section class="slide active">
+      <div class="bg"></div><div class="wave"></div><div class="wave2"></div>
+      <header class="top">
+        <div class="logos">
+          <div class="logo-box"><img src="https://arehucas.es/wp-content/uploads/2023/08/Logo-Arehucas-con-texto@2x.png" alt="Logo oficial de Arehucas"></div>
+          <div class="logo-box"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo-clipper.png" alt="Logo oficial de Clipper"></div>
+        </div>
+        <div class="badge"><i class="fa-solid fa-bullhorn"></i> Módulo 3 · Mini estrategia digital</div>
+      </header>
+
+      <main class="main">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <div class="eyebrow"><i class="fa-solid fa-layer-group"></i> Diapositiva 1 · Empresa + producto/servicio + público objetivo</div>
+            <h1 class="title">Arehucas <span class="accent1">x</span> Clipper:<br><span class="accent2">la combi canaria</span></h1>
+            <p class="lead">
+              Campaña digital para promocionar la colaboración <strong>Arehucas + Clipper</strong>, centrada en la bebida lista para consumir
+              <strong>“La combi completa · Arehucas Mix Maracuyá y Fresa”</strong>. La idea es posicionarla como una opción fresca,
+              divertida, visual y muy vinculada a la identidad canaria.
+            </p>
+
+            <div class="hero-pills">
+              <div class="pill"><i class="fa-solid fa-wine-bottle yellow"></i><div><strong>Producto a promocionar:</strong><br>Edición/campaña de Arehucas Mix con Clipper.</div></div>
+              <div class="pill"><i class="fa-solid fa-users blue"></i><div><strong>Público principal:</strong><br>Jóvenes y adultos de 18 a 35 años.</div></div>
+              <div class="pill"><i class="fa-solid fa-location-dot green"></i><div><strong>Ubicación:</strong><br>Canarias, especialmente residentes y turistas.</div></div>
+              <div class="pill"><i class="fa-solid fa-mobile-screen-button pink"></i><div><strong>Hábitos:</strong><br>Muy activos en Instagram, TikTok y contenido visual.</div></div>
+            </div>
+
+            <div class="pill-row">
+              <div class="pill"><i class="fa-solid fa-heart turq"></i> Intereses: ocio, verano, amigos, planes al aire libre, marcas locales</div>
+              <div class="pill"><i class="fa-solid fa-bolt yellow"></i> Necesidad: una bebida atractiva, fácil de compartir y con personalidad</div>
+            </div>
+          </div>
+
+          <div class="hero-visual">
+            <img src="https://www.ahembo.com/wp-content/uploads/La-combi-compelta-REDI-1140x400-1.jpg" alt="Promoción oficial de la colaboración Clipper y Arehucas Mix de maracuyá y fresa">
+            <div class="hero-tag">Idea creativa: unir tradición + frescura + orgullo canario en una campaña joven, memorable y compartible.</div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="footer">
+        <span>Didáctico: aquí respondemos <strong>qué promocionamos</strong> y <strong>a quién nos dirigimos</strong>.</span>
+        <span class="small">1 / 4</span>
+      </footer>
+    </section>
+
+    <!-- DIAPOSITIVA 2 -->
+    <section class="slide">
+      <div class="bg"></div><div class="wave"></div><div class="wave2"></div>
+      <header class="top">
+        <div class="logos">
+          <div class="logo-box"><img src="https://arehucas.es/wp-content/uploads/2023/08/Logo-Arehucas-con-texto@2x.png" alt="Logo oficial de Arehucas"></div>
+          <div class="logo-box"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo-clipper.png" alt="Logo oficial de Clipper"></div>
+        </div>
+        <div class="badge"><i class="fa-solid fa-star"></i> Diapositiva 2 · Propuesta de valor</div>
+      </header>
+
+      <main class="main">
+        <article class="card">
+          <div class="card-head">
+            <div>
+              <div class="section-kicker">¿Por qué elegir esta marca/producto?</div>
+              <h2 class="section-title">Una mezcla con sabor a <span style="color:#0f7d8e">Canarias</span></h2>
+              <p class="subtle">La propuesta de valor debe explicar qué hace interesante, útil o diferente a la marca. En este caso, la fuerza está en la unión de dos iconos canarios muy reconocibles.</p>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="value-box">
+              <div class="big">Propuesta de valor</div>
+              <p>
+                <strong>Arehucas x Clipper</strong> ofrece una bebida con <strong>identidad canaria</strong>, aspecto llamativo y un componente emocional muy fuerte:
+                mezcla la <strong>tradición y prestigio</strong> de Arehucas con la <strong>frescura, color y recuerdo popular</strong> de Clipper.
+                No se vende solo un producto, sino una experiencia social, local y compartible.
+              </p>
+            </div>
+
+            <div class="grid-3">
+              <div class="tile">
+                <div class="icon-ball"><i class="fa-solid fa-flag"></i></div>
+                <h3>Identidad local</h3>
+                <p>Refuerza el orgullo canario y conecta con quienes valoran productos de aquí.</p>
+              </div>
+              <div class="tile">
+                <div class="icon-ball icon-yellow"><i class="fa-solid fa-sun"></i></div>
+                <h3>Frescura y diversión</h3>
+                <p>Su imagen y sabores lo hacen ideal para verano, ocio, terrazas y redes sociales.</p>
+              </div>
+              <div class="tile">
+                <div class="icon-ball icon-green"><i class="fa-solid fa-share-nodes"></i></div>
+                <h3>Alta compartibilidad</h3>
+                <p>Es un producto fotogénico y fácil de recomendar, compartir o subir a stories y reels.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-3" style="margin-top:14px">
+            <div class="tile">
+              <h3><i class="fa-solid fa-check blue"></i> Beneficio principal</h3>
+              <p>Disfrutar de una bebida lista para tomar, original y con una historia de marca potente.</p>
+            </div>
+            <div class="tile">
+              <h3><i class="fa-solid fa-check pink"></i> Diferenciación</h3>
+              <p>Se diferencia de otras bebidas por su vínculo con Canarias y por la combinación de dos marcas icónicas.</p>
+            </div>
+            <div class="tile">
+              <h3><i class="fa-solid fa-check green"></i> Utilidad para el cliente</h3>
+              <p>Le aporta sabor, comodidad, reconocimiento social y una experiencia más memorable.</p>
+            </div>
+          </div>
+        </article>
+      </main>
+
+      <footer class="footer">
+        <span>Didáctico: la propuesta de valor responde a <strong>“por qué debería elegirlo el cliente”</strong>.</span>
+        <span class="small">2 / 4</span>
+      </footer>
+    </section>
+
+    <!-- DIAPOSITIVA 3 -->
+    <section class="slide">
+      <div class="bg"></div><div class="wave"></div><div class="wave2"></div>
+      <header class="top">
+        <div class="logos">
+          <div class="logo-box"><img src="https://arehucas.es/wp-content/uploads/2023/08/Logo-Arehucas-con-texto@2x.png" alt="Logo oficial de Arehucas"></div>
+          <div class="logo-box"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo-clipper.png" alt="Logo oficial de Clipper"></div>
+        </div>
+        <div class="badge"><i class="fa-solid fa-hashtag"></i> Diapositiva 3 · Canales digitales + tipos de contenido</div>
+      </header>
+
+      <main class="main">
+        <article class="card">
+          <div class="card-head">
+            <div>
+              <div class="section-kicker">Dónde comunicar y qué publicar</div>
+              <h2 class="section-title">Canales digitales y contenido</h2>
+              <p class="subtle">En esta diapositiva respondemos dos partes del ejercicio: <strong>qué canales utilizaríamos</strong> y <strong>qué tipo de contenido publicaríamos</strong>.</p>
+            </div>
+          </div>
+
+          <div class="grid-4">
+            <div class="tile">
+              <div class="icon-ball"><i class="fa-brands fa-instagram"></i></div>
+              <h4>Instagram</h4>
+              <ul>
+                <li>Reels mostrando la bebida</li>
+                <li>Stories con encuestas</li>
+                <li>Fotos lifestyle y colaboraciones</li>
+              </ul>
+            </div>
+            <div class="tile">
+              <div class="icon-ball icon-pink"><i class="fa-brands fa-tiktok"></i></div>
+              <h4>TikTok</h4>
+              <ul>
+                <li>Vídeos cortos y dinámicos</li>
+                <li>Retos con audio canario</li>
+                <li>Contenido con creadores locales</li>
+              </ul>
+            </div>
+            <div class="tile">
+              <div class="icon-ball icon-yellow"><i class="fa-solid fa-globe"></i></div>
+              <h4>Página web / landing</h4>
+              <ul>
+                <li>Información de campaña</li>
+                <li>Promoción destacada</li>
+                <li>Dónde comprar o probar</li>
+              </ul>
+            </div>
+            <div class="tile">
+              <div class="icon-ball icon-green"><i class="fa-solid fa-bullseye"></i></div>
+              <h4>Publicidad online</h4>
+              <ul>
+                <li>Anuncios segmentados</li>
+                <li>Remarketing</li>
+                <li>Tráfico a landing y promociones</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="grid-3" style="margin-top:14px">
+            <div class="tile">
+              <h3>Contenido de marca</h3>
+              <p>Publicaciones con la historia de la colaboración, valores de Canarias, diseño de la lata y tono alegre.</p>
+            </div>
+            <div class="tile">
+              <h3>Contenido emocional</h3>
+              <p>Momentos de amigos, playa, terrazas, celebraciones y verano para conectar con el estilo de vida.</p>
+            </div>
+            <div class="tile">
+              <h3>Contenido participativo</h3>
+              <p>Sorteos, hashtag de campaña, vídeos de usuarios, concursos de fotos y retos en TikTok/Instagram.</p>
+            </div>
+          </div>
+
+          <div class="action-banner">
+            <strong>Ejemplos concretos de publicaciones:</strong>
+            reels del producto, stories interactivas, anuncios promocionales, testimonios de clientes, sorteos, colaboraciones con influencers canarios y contenido generado por usuarios.
+          </div>
+        </article>
+      </main>
+
+      <footer class="footer">
+        <span>Didáctico: elegimos canales por el público y el tipo de contenido por su capacidad de captar atención.</span>
+        <span class="small">3 / 4</span>
+      </footer>
+    </section>
+
+    <!-- DIAPOSITIVA 4 -->
+    <section class="slide">
+      <div class="bg"></div><div class="wave"></div><div class="wave2"></div>
+      <header class="top">
+        <div class="logos">
+          <div class="logo-box"><img src="https://arehucas.es/wp-content/uploads/2023/08/Logo-Arehucas-con-texto@2x.png" alt="Logo oficial de Arehucas"></div>
+          <div class="logo-box"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo-clipper.png" alt="Logo oficial de Clipper"></div>
+        </div>
+        <div class="badge"><i class="fa-solid fa-chart-column"></i> Diapositiva 4 · Acción buscada + métricas</div>
+      </header>
+
+      <main class="main">
+        <article class="card">
+          <div class="card-head">
+            <div>
+              <div class="section-kicker">Qué queremos que haga el cliente y cómo medimos</div>
+              <h2 class="section-title">Acción y métricas</h2>
+              <p class="subtle">Toda campaña necesita una acción concreta y unos indicadores que permitan comprobar si ha funcionado.</p>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="tile">
+              <div class="icon-ball"><i class="fa-solid fa-bullhorn"></i></div>
+              <h3>Acción principal que buscamos</h3>
+              <p>
+                Que el cliente <strong>pruebe o compre el producto</strong>, visite la landing de la campaña y comparta contenido en redes con el hashtag de la promoción.
+              </p>
+              <ul>
+                <li>Comprar la bebida o pedirla en un local</li>
+                <li>Visitar la web / landing</li>
+                <li>Seguir la campaña en redes</li>
+                <li>Participar en el sorteo o subir una story/reel</li>
+              </ul>
+            </div>
+
+            <div class="tile">
+              <div class="icon-ball icon-green"><i class="fa-solid fa-bullseye"></i></div>
+              <h3>Objetivo resumido</h3>
+              <p>
+                Aumentar la notoriedad de la colaboración Arehucas x Clipper, generar interacción digital y convertir ese interés en pruebas, ventas y conversación social.
+              </p>
+            </div>
+          </div>
+
+          <div class="metrics">
+            <div class="metric">
+              <div class="number">Alcance</div>
+              <p>Impresiones, visualizaciones, alcance de reels y número de usuarios impactados.</p>
+            </div>
+            <div class="metric">
+              <div class="number">Interacción</div>
+              <p>Likes, comentarios, compartidos, guardados, uso del hashtag y participación en sorteos.</p>
+            </div>
+            <div class="metric">
+              <div class="number">Conversión</div>
+              <p>Clics a la web, visitas a la landing, tasa de conversión, cupones usados y ventas obtenidas.</p>
+            </div>
+          </div>
+
+          <div class="grid-3" style="margin-top:14px">
+            <div class="tile">
+              <h3>Otras métricas útiles</h3>
+              <p>Seguidores ganados, mensajes recibidos, formularios, escaneos QR o tráfico desde anuncios.</p>
+            </div>
+            <div class="tile">
+              <h3>Publicidad online</h3>
+              <p>Coste por clic (CPC), coste por conversión y retorno de la inversión (ROI).</p>
+            </div>
+            <div class="tile">
+              <h3>Ejemplo de éxito</h3>
+              <p>La campaña funciona si aumenta el reconocimiento de marca, hay interacción y se traduce en compras o pruebas.</p>
+            </div>
+          </div>
+
+          <div class="sources">
+            <strong>Recursos visuales utilizados en el HTML:</strong><br>
+            Logo Arehucas: <a href="https://arehucas.es/wp-content/uploads/2023/08/Logo-Arehucas-con-texto@2x.png" target="_blank">https://arehucas.es/wp-content/uploads/2023/08/Logo-Arehucas-con-texto@2x.png</a><br>
+            Logo Clipper: <a href="https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo-clipper.png" target="_blank">https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo-clipper.png</a><br>
+            Imagen promoción: <a href="https://www.ahembo.com/wp-content/uploads/La-combi-compelta-REDI-1140x400-1.jpg" target="_blank">https://www.ahembo.com/wp-content/uploads/La-combi-compelta-REDI-1140x400-1.jpg</a>
+          </div>
+        </article>
+      </main>
+
+      <footer class="footer">
+        <span>Didáctico: cerramos la estrategia con una <strong>acción clara</strong> y con <strong>métricas medibles</strong>.</span>
+        <span class="small">4 / 4</span>
+      </footer>
+    </section>
+
+  </div>
+
+  <div class="tip">Presentación breve · juvenil · visual · lista para clase</div>
+  <div class="nav" id="dots"></div>
+  <div class="arrows">
+    <button class="arrow" onclick="prevSlide()">←</button>
+    <button class="arrow" onclick="nextSlide()">→</button>
+  </div>
+
+  <script>
+    const slides=[...document.querySelectorAll('.slide')];
+    const dots=document.getElementById('dots');
+    let current=0;
+    slides.forEach((_,i)=>{
+      const b=document.createElement('button');
+      b.className='dot'+(i===0?' active':'');
+      b.onclick=()=>goTo(i);
+      dots.appendChild(b);
+    });
+    function goTo(i){
+      slides[current].classList.remove('active');
+      dots.children[current].classList.remove('active');
+      current=(i+slides.length)%slides.length;
+      slides[current].classList.add('active');
+      dots.children[current].classList.add('active');
+    }
+    function nextSlide(){goTo(current+1)}
+    function prevSlide(){goTo(current-1)}
+    document.addEventListener('keydown',e=>{
+      if(e.key==='ArrowRight'||e.key===' ') nextSlide();
+      if(e.key==='ArrowLeft') prevSlide();
+    });
+  </script>
+</body>
+</html>
